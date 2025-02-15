@@ -106,7 +106,7 @@ class DetectorRepositoryImplementation(DetectorRepository):
                                                                                 secondaryModelTag=secondaryModel.getTag(),
                                                                                 maxLength=self.__maxDetectionLength), zip(samples,values)))
                         except Exception as e:
-                            return DetectionFailure(f'{detector.getTag()} had an exception "{e}" during detection with models: {primaryModel.getTag()} and {secondaryModel.getTag()}',-1)
+                            return Left(DetectionFailure(f'{detector.getTag()} had an exception "{e}" during detection with models: {primaryModel.getTag()} and {secondaryModel.getTag()}',-1))
                         #May remove this later
                         secondaryModel.unload()
                 else:
@@ -119,7 +119,7 @@ class DetectorRepositoryImplementation(DetectorRepository):
                                                                         baseModelTag=primaryModel.getTag(),
                                                                         maxLength=self.__maxDetectionLength), zipped))
                     except Exception as e:
-                            return DetectionFailure(f'{detector.getTag()} had an exception "{e}" during detection with model: {primaryModel.getTag()} ',-1)
+                            return Left(DetectionFailure(f'{detector.getTag()} had an exception "{e}" during detection with model: {primaryModel.getTag()} ',-1))
             #This too
             primaryModel.unload()
 

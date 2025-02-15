@@ -22,6 +22,8 @@ from tqdm import tqdm
 
 
 from codetector.dataset import DatasetBatch
+
+from codetector.dataset import DatasetBatch
 from dataset.stackoverflow import ParquetStackOverflowPostDataset,ParquetStackOverflowPreDataset
 from dataset.apps import APPSDataset
 from dataset.codesearchnet import CodeSearchNetPythonDataset
@@ -79,7 +81,7 @@ if __name__ == '__main__':
     AddGenerator(AddGeneratorParameters(codellama13))
 
     codellama7_instruct = CodeLlama_Instruct_7B()
-    AddGenerator(AddGeneratorParameters(phi1))
+    AddGenerator(AddGeneratorParameters(codellama7_instruct))
 
     codellama13_instruct = CodeLlama_Instruct_13B()
     AddGenerator(AddGeneratorParameters(codellama13_instruct))
@@ -103,7 +105,6 @@ if __name__ == '__main__':
     AddGenerator(AddGeneratorParameters(codegemma))
 
     ### Datasets
-
 
     f = PLFilter([CodeSample.fromLanguage('python'),
                    CodeSample.fromLanguage('java'),
@@ -160,9 +161,10 @@ if __name__ == '__main__':
                 generatedDataset.addSample(batch.samples[i])
                 #Add all generator 
                 for generatorOutput in result._value:                    
-                    for samples in generatorOutput:
+                    for samples in generatorOutput[i]:
                         if isinstance(samples, list):
-                            generatedDataset.addSample(samples[i])
+                            for sample in samples:
+                                generatedDataset.addSample(sample)
                         else:
                             generatedDataset.addSample(samples)
         else:

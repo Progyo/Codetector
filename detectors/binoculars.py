@@ -10,7 +10,7 @@ class BinocularsDetector(SingleModelDetector,TwoModelDetectorMixin):
     """
 
 
-    def __init__(self):
+    def __init__(self, keepBothModelsLoaded:bool=False):
         super().__init__()
         self.__model : BaseModel|DetectorMixin = None
         """
@@ -21,6 +21,8 @@ class BinocularsDetector(SingleModelDetector,TwoModelDetectorMixin):
         """
         The second model used by the detection method.
         """
+
+        self.__keepBothModelsLoaded:bool = keepBothModelsLoaded
 
     def initialize(self) -> None:
         try:
@@ -112,15 +114,17 @@ class BinocularsDetector(SingleModelDetector,TwoModelDetectorMixin):
 
         
         logits_perf, labels_perf, attention_mask_perf, hidden_states = self.__model.getLogits(sample)
+        perfPadToken = self.__model.getPadTokenId()
 
         if self.__secondaryModel != self.__model:
             
-            if self.__secondaryModel.isLargeModel() or self.__model.isLargeModel():
+            if (self.__secondaryModel.isLargeModel() or self.__model.isLargeModel()) and not self.__keepBothModelsLoaded:
                 self.__model.unload()
 
-            logits_obs, labels_obs, attention_mask_obs, hidden_states = self.perturbationModel.getLogits(sample)
+            logits_obs, labels_obs, attention_mask_obs, hidden_states = self.__secondaryModel.getLogits(sample)
+            obsPadToken = self.__secondaryModel.getPadTokenId()
 
-            if self.__secondaryModel.isLargeModel() or self.__model.isLargeModel():
+            if (self.__secondaryModel.isLargeModel() or self.__model.isLargeModel()) and not self.__keepBothModelsLoaded:
                 self.__secondaryModel.unload()
 
             try:
@@ -132,9 +136,10 @@ class BinocularsDetector(SingleModelDetector,TwoModelDetectorMixin):
                 
         else:
             logits_obs, labels_obs = logits_perf, labels_perf
+            obsPadToken = perfPadToken
 
 
-        if self.__model.getPadTokenId() != self.__secondaryModel.getPadTokenId():
+        if perfPadToken != obsPadToken:
             raise Exception('Pad token mismatch!')
 
         ppl = self.__perplexity(logits_perf,attention_mask_perf,labels_perf)
@@ -143,7 +148,7 @@ class BinocularsDetector(SingleModelDetector,TwoModelDetectorMixin):
             x_ppl = self.__entropy(logits_obs,
                                 logits_perf,
                                 labels_perf,
-                                self.__model.getPadTokenId())
+                                perfPadToken)
 
         except Exception:
             return None

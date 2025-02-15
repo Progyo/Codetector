@@ -133,20 +133,40 @@ class GeneratorRepositoryImplementation(GeneratorRepository):
         grouped : tuple[list[list[Sample]],list[list[int]]] = self.__groupBySize(samples, 0.25)
         
         #Generator-Samples-GenerateCount
-        generated : list[list[list[Sample]]] = [[]]*len(self.__generators)
+        generated : list[list[list[Sample]]] = [[] for _ in range(len(self.__generators))]
 
         for generatorIndex, generator in enumerate(self.__generators):
             for group in grouped[0]:
                 #Filter out unsupported samples
                 #Correct generator implementation should ignore None values in list
                 #Should return None instead of list at index that was skipped
-                filteredGroup = [sample if generator.supportsSample(sample) else None for sample in group]
+                # filteredGroup = [sample if generator.supportsSample(sample) else None for sample in group]
+
+                filteredGroup : list[Sample] = []
+                positions : list[int] = []
+                for i,sample in enumerate(group):
+                    if generator.supportsSample(sample):
+                        filteredGroup.append(sample)
+                        positions.append(i)
+
+                #List of samples that were output
+                output : list[list[Sample]] = []
                 if torch != None:
                     with torch.inference_mode():
-                        generated[generatorIndex] += generator.generateBatch(filteredGroup)
+                        output = generator.generateBatch(filteredGroup)
                     torch.cuda.empty_cache()
                 else:
-                    generated[generatorIndex] += generator.generateBatch(filteredGroup)
+                    output = generator.generateBatch(filteredGroup)
+
+                #Add None to positions in generated[generatorIndex] where the sample was skipped
+                added = 0
+                for i in range(len(group)):
+                    if i in positions:
+                        generated[generatorIndex].append(output[added])
+                        added+=1
+                    else:
+                        generated[generatorIndex].append(None)
+
 
             generator.unload()
 
@@ -155,10 +175,10 @@ class GeneratorRepositoryImplementation(GeneratorRepository):
         #Flatten list
         correctIndices = [item for sublist in grouped[1] for item in sublist]
 
-        toReturn : list[list[list[Sample]]] = [None]*len(self.__generators)
+        toReturn : list[list[list[Sample]]] = [None for _ in range(len(self.__generators))]
 
         for generatorIndex, generatorSamples in enumerate(generated):
-            toReturn[generatorIndex] = [None]*len(generatorSamples)
+            toReturn[generatorIndex] = [None for _ in range(len(generatorSamples))]
             for sampleIndex, sample in enumerate(generatorSamples):
                 toReturn[generatorIndex][correctIndices[sampleIndex]] = sample
 

@@ -12,7 +12,7 @@ class FastDetectGPT(SingleModelDetector,TwoModelDetectorMixin):
     """
 
 
-    def __init__(self):
+    def __init__(self, keepBothModelsLoaded:bool=False):
         super().__init__()
         self.__model : BaseModel|DetectorMixin = None
         """
@@ -23,6 +23,8 @@ class FastDetectGPT(SingleModelDetector,TwoModelDetectorMixin):
         """
         The second model used by the detection method.
         """
+
+        self.__keepBothModelsLoaded : bool = keepBothModelsLoaded
 
     def initialize(self) -> None:
         try:
@@ -67,14 +69,14 @@ class FastDetectGPT(SingleModelDetector,TwoModelDetectorMixin):
 
         if self.__secondaryModel != self.__model:
 
-            if self.__secondaryModel.isLargeModel() or self.__model.isLargeModel():
+            if (self.__secondaryModel.isLargeModel() or self.__model.isLargeModel()) and not self.__keepBothModelsLoaded:
                 self.__secondaryModel.unload()
 
             logits_scoring, labels_scoring, attention_mask, hidden_states = self.__model.getLogits(sample)
             logits_scoring = logits_scoring[..., :-1, :].contiguous()
             labels_scoring = labels_scoring[..., 1:].contiguous()
 
-            if self.__secondaryModel.isLargeModel() or self.__model.isLargeModel():
+            if (self.__secondaryModel.isLargeModel() or self.__model.isLargeModel()) and not self.__keepBothModelsLoaded:
                 self.__model.unload()
 
 

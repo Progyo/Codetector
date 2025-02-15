@@ -5,6 +5,10 @@ class TwoModelDetectorMixin(ABC):
     """
     Mixin for all detectors that use two models for detection in the framework.
     """
+    
+    def __init__(self, keepBothModelsLoaded:bool=False):
+        pass
+        
 
     @abstractmethod
     def setSecondaryModel(self, secondaryModel:DetectorMixin) -> None:

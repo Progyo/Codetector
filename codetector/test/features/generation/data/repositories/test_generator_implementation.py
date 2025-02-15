@@ -1031,15 +1031,15 @@ class TestGeneratorImplementation(unittest.TestCase):
 
                             #Correct return type
                             self.assertIsInstance(result, Right)
-                            self.assertTrue(issubclass(result._value[0][0][0].__class__, NoneType))
+                            self.assertTrue(issubclass(result._value[0][0].__class__, NoneType))
                             
                             #Correct size
                             self.assertTrue(len(result._value)==1)
                             self.assertTrue(len(result._value[0])==len(inputSamples))
                             
                             #Correct generateBatch calls
-                            mock4.assert_has_calls(list(map(lambda x: call(x), [[None]*len(expectedCalls[i]) for i in range(0,3)])))
-                            self.assertListEqual(result._value[0], [[None]]*len(inputSamples))
+                            mock4.assert_has_calls(list(map(lambda x: call([]), [[None]*len(expectedCalls[i]) for i in range(0,3)])))
+                            self.assertListEqual(result._value[0], [None]*len(inputSamples))
                             
                             #Correct support sample calls
                             mock3.assert_has_calls(list(map(lambda x: call(x), [inputSamples[i] for i in range(0,3)])), any_order=True)

@@ -31,7 +31,7 @@ from detectors.binoculars import BinocularsDetector
 from tqdm import tqdm
 
 
-from codetector.dataset import DatasetBatch
+from codetector.dataset import  DatasetBatch
 
 from dataset.generated_dataset import XMLGeneratedCodeDataset
 from dataset.detection_dataset import XMLCodeDetectionDataset
@@ -93,7 +93,7 @@ if __name__ == '__main__':
     RegisterSecondaryModels(RegisterSecondaryModelsParameters({codellama13:[codellama13],
                                                                codellama13_instruct:[codellama13_instruct],
                                                                llama3_8:[llama3_8],
-                                                               llama3_8_instruct:[llama3_8],
+                                                               llama3_8_instruct:[llama3_8_instruct],
                                                                codellama7:[codellama13_instruct],
                                                                codellama7_instruct:[codellama13_instruct],
                                                                codegen:[codegen],
@@ -102,7 +102,7 @@ if __name__ == '__main__':
                                                                codegemma:[codegemma],
                                                                wavecoder:[wavecoder],
                                                                incoder6:[incoder6],
-                                                               phi3:[codellama13_instruct],
+                                                               phi3:[phi3],
                                                                starcoder2_3:[starcoder2_7],
                                                                phi1:[phi1],
                                                                incoder:[incoder6]}))
@@ -119,10 +119,10 @@ if __name__ == '__main__':
     rank = RankDetector()
     AddDetector(AddDetectorParameters(rank))
 
-    fastdetectgpt = FastDetectGPT()
+    fastdetectgpt = FastDetectGPT(keepBothModelsLoaded=True)
     AddDetector(AddDetectorParameters(fastdetectgpt))
 
-    binoculars = BinocularsDetector()
+    binoculars = BinocularsDetector(keepBothModelsLoaded=True)
     AddDetector(AddDetectorParameters(binoculars))
 
     ### Datasets
@@ -171,7 +171,13 @@ if __name__ == '__main__':
         batch = generatedDataset.loadBatch(batchSize)
         bar.update(1)
 
-    finalDataset.save()
-    finalDataset.saveCheckpoint()
+        finalDataset.save()
+        finalDataset.saveCheckpoint()
+
+
+    if not batch.final:
+        finalDataset.save()
+        finalDataset.saveCheckpoint()
+
     bar.close()
 
