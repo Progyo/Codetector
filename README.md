@@ -13,7 +13,7 @@
 
 ## Description
 
-Codetector is an AI-generated content (AIGC) detection framework initially designed for code detection. We developed it to produce a large corpus of 113,776 code samples and 12,294,388 detection samples using 17 large language models (LLMs) and five detection methods. You can read more about the process and results we produced in our paper titled "Codetector: A Framework for Zero-shot Detection of AI-Generated Code".
+Codetector is a modular AI-generated content (AIGC) detection framework that allows easy integration of custom datasets, large language models (LLMs), and detection methods. With features like crash recovery and unit-tested code, it provides a flexible and robust pipeline for AIGC generation and detection. Initially designed for code detection, we developed it to produce a large corpus of 113,776 code samples and 12,294,388 detection samples using 17 LLMs and five detection methods. You can read more about the process and results we produced in our paper titled "Codetector: A Framework for Zero-shot Detection of AI-Generated Code".
 
 ## Features
 
