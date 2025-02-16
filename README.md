@@ -74,7 +74,7 @@ For full control of packages being installed, follow these step-by-step instruct
 
 ## Datasets
 
-The datasets from various stages of our generation and detection process can be found below. Alongside the datasets, we supply hashlists stored in Python Pickle files that can be used to filter them to match distributions that we used in our paper. Place all of the hashlist files in the `data` folder in the root directory. It is important to note that the individual datasets themselves are not part of the framework. They can be located outside in the `dataset` folder in the root directory. Feel free to add your own implementations in this folder (see [Custom Dataset](#custom-dataset)).
+The datasets from various stages of our generation and detection process can be found below. Alongside the datasets, we supply hashlists stored in Python Pickle files that can be used to filter them to match distributions that we used in our paper. Place all of the hash list files in the `data` folder in the root directory. It is important to note that the individual datasets themselves are not part of the framework. They can be located outside in the `dataset` folder in the root directory. Feel free to add your own implementations in this folder (see [Custom Dataset](#custom-dataset)).
 
 ### Source
 
@@ -109,7 +109,7 @@ for sample in batch.samples:
 
 #### LeetCode
 
-For LeetCode we utilise two sources. For the "Pre" dataset we utilise [Hugging Face Datasets](https://huggingface.co/docs/datasets/en/index), like APPS and CodeSearchNet. For the "Post" dataset we use our own web-scraped dataset and extend the `Dataset` abstract class defined in the framework to implement JSON reading capabilities for the specific dataset.
+For LeetCode we utilise two sources. For the "Pre" dataset we utilise [Hugging Face Datasets](https://huggingface.co/docs/datasets/en/index), like APPS and CodeSearchNet. For the "Post" dataset we use our own web-scraped dataset and extend the `Dataset` abstract class defined in the framework to implement JSON reading capabilities for the specific dataset. You can find the hash lists [here]().
 
 For LeetCode Post, you must download the dataset from [here]() and place it under `data/leetcode_post/samples.json`.
 
@@ -128,7 +128,7 @@ leetcodePost = LeetCodePostDataset(filters=[DistributionFilter('data/leetcode-po
 
 #### Stack Overflow
 
-For Stack Overflow, like LeetCode, we split the dataset into "Pre" and "Post". We supply the split datasets individually as two compressed Apache Parquet partition datasets. You can download the Pre dataset [here]() and the Post dataset [here](). Place the `.parquet` files in `data/stackoverflow_pre` and `data/stackoverflow_post` respectively.
+For Stack Overflow, like LeetCode, we split the dataset into "Pre" and "Post". We supply the split datasets individually as two compressed Apache Parquet partition datasets. You can download the Pre dataset [here]() and the Post dataset [here](). Place the `.parquet` files in `data/stackoverflow_pre` and `data/stackoverflow_post` respectively. You can find the hash lists [here]().
 
 Usage:
 ```py
