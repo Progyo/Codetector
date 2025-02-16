@@ -1,0 +1,10 @@
+tqdm
+numpy
+oslash
+pandas
+pyarrow
+datasets
+nltk
+tiktoken
+matplotlib
+scikit-learn

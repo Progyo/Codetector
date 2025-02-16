@@ -63,7 +63,7 @@ class HuggingFaceDataset(Dataset):
         try:
             from datasets import load_dataset, IterableDataset
         except ModuleNotFoundError:
-            raise Exception('Dataset requires datasets package!')
+            raise Exception(f'{self.__class__.__name__} requires datasets package!')
 
 
         if self.__subset != None:
@@ -109,7 +109,7 @@ class HuggingFaceDataset(Dataset):
 
     def toDataframe(self) -> pd.DataFrame:
         # return pd.DataFrame(list(map(lambda x:x.toDict(), self.__samples)))
-        pass
+        raise Exception('Hugging Face Datasets currently do no support conversion to dataframe objects')
 
 
     @abstractmethod
