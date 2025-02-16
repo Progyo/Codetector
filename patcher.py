@@ -21,7 +21,7 @@ def getTypingFile(pythonLibPath:str) -> str:
         with open(path,'r') as file:
             return file.read()
     else:
-        raise Exception(f'Couldn\'t find typing.py! at {path}')
+        raise Exception(f'Couldn\'t find typing.py at {path}!')
     
 def replaceTypingFile(pythonLibPath:str,newText:str) -> str:
     path = f'{pythonLibPath}/typing.py'
@@ -29,7 +29,7 @@ def replaceTypingFile(pythonLibPath:str,newText:str) -> str:
         with open(path,'w+') as file:
             file.write(newText)
     else:
-        raise Exception(f'Couldn\'t replace typing.py! {path}')
+        raise Exception(f'Couldn\'t replace typing.py at {path}!')
 
 
 #Thanks to @eltoder for the patch
@@ -104,7 +104,7 @@ if __name__ == "__main__":
 
     pythonLibPath = str(Path(sys.executable).parent.parent.joinpath(f'lib/{pythonVer}'))
 
-    print(pythonLibPath)
+    print(f'Detected Python lib folder: {pythonLibPath}')
 
     fileStr = getTypingFile(pythonLibPath)
 
@@ -117,4 +117,6 @@ if __name__ == "__main__":
     fileStr = fileStr.replace(classStr,PATCH)
 
     replaceTypingFile(pythonLibPath,fileStr)
+
+    print('Successfully patched typing.py')
     
