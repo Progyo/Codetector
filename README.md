@@ -1,6 +1,10 @@
-# Codetector
+<h1 style="text-align: center;">Codetector</h1> 
+<div style="text-align: center;">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
+  <a href="/"><img src="https://img.shields.io/badge/status-active-success.svg" alt="Status"></a>
+</div>
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![Status](https://img.shields.io/badge/status-active-success.svg)](/)
+---
 
 ## Table of Contents
 
