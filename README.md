@@ -19,26 +19,36 @@ Codetector is a modular AI-generated content (AIGC) detection framework that all
 
 - Modular: The framework is designed to be flexible and accomodate changes in any layer of the pipeline. Don't like the existing `run_generation_pipeline.py` or `run_detection_pipeline.py` file? Then change it to your heart's content and utilise the the underlying use cases and managers as you wish.
 - Expandable: Easily integrate new dataset/sources, LLMs, and detection methods in the pipeline. Simply implement/extend the necessary abstract classes and mixins defined in the framework and reference your implementation in the pipeline files.
-- Crash Recovery: Crashes in the pipeline can be resumed from the latest batch. Data in the batch will be lost as states are only saved after each batch.
+- Crash Recovery: Crashes in the pipeline can be resumed from the latest batch. Data in the batch will **STILL** be lost as states are only saved after each batch.
 - Reproducibility: The same starting parameters and pipeline configuration will result in the same output when running on the same machine. It has not been tested for other machines yet but should work in theory.
-- Tested: The framework is unit tested (with more tests on the way) to increase confidence in its underlying functionality. It is up to the end user to ensure that the LLMs they add and use are configured and implemented properly.
+- Tested: The framework is unit tested (with more tests on the way) to increase confidence in its underlying functionality. **THOUGH** it is up to the end user to ensure that the LLMs they add and use are configured and implemented properly.
 
 ## Installation
 
 1.  Clone the repository:
-    ```
+    ```sh
     git clone https://github.com/Progyo/Codetector
     ```
 
 We provide several ways to use our framework. Note that some LLMs may have their own dependencies. For the framework itself, depending on your preferences, choose one of the following ways to install the dependencies:
 
-### Conda
+### Conda (Automatic)
+We provide a `environment.yaml` file that automatically sets up the environment. It is configured to install all the necessary packages to support CUDA 11.8 + PyTorch + Hugging Face Transformers. This is the configuration that we used to generate our corpus.
+
+2. Run `conda env create -f environment.yaml` to install package.
+3. Activate the environment with `conda activate codetector`.
+4. :exclamation: You **must** patch `typing.py` to support generic typedefs in Python. You may run `patcher.py` at your on discretion to automatically patch your `typing.py` file. Confirm that you are running the script in the environment. Beware that the script modifies base Python packages and may break your Python install. If you prefer to do it manually:
+   1. Locate the `typing.py` file used by your conda environment. It is usually located under `lib/python3.10/typing.py`, for Python 3.10.
+   2. Replace the class `NewType` in `typing.py` with the code found [here](https://gist.github.com/eltoder/4035faa041112a988dcf3ab101fb3db1).
+
+
+### Conda (Manual)
 For full control of packages being installed, follow these step-by-step instructions on how to install the project using conda.
 
 
-2. Create conda environment using `conda create --name codetector python=3.10`.
-3. :exclamation: You **must** patch `typing.py` to support generic typedefs in Python. You may run `patcher.py` at your on discretion to automatically patch your `typing.py` file. Beware that the script modifies base Python packages and may break your Python installc else:
-   1. Locate the `typing.py` file used by your conda environment. It is usually located under `lib/python3.10/typing.py`.
+2. Create conda environment using `conda create --name codetector python=3.10` and activate with `conda activate codetector`.
+3. :exclamation: You **must** patch `typing.py` to support generic typedefs in Python. You may run `patcher.py` at your on discretion to automatically patch your `typing.py` file. Beware that the script modifies base Python packages and may break your Python install. If you prefer to do it manually:
+   1. Locate the `typing.py` file used by your conda environment. It is usually located under `lib/python3.10/typing.py`, for Python 3.10.
    2. Replace the class `NewType` in `typing.py` with the code found [here](https://gist.github.com/eltoder/4035faa041112a988dcf3ab101fb3db1).
 4. For the general framework, install the following (or run `pip install -r requirements.txt`):
    1. For progress bars, install **tqdm** using `pip install tqdm`
@@ -53,13 +63,13 @@ For full control of packages being installed, follow these step-by-step instruct
 5. To add CUDA support, install the following:
    1. Install **cudatoolkit** using `conda install cudatoolkit=11.8.0`
    2. Install **cuda-nvcc 11.8** using `conda install nvidia/label/cuda-11.8.0::cuda-nvcc`
-   3. Install **PyTorch** using `conda install pytorch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 pytorch-cuda=11.8 -c pytorch -c nvidia`
-6. To add Hugging Face Transformers LLM inference support (with quantization), install the following:
-   1. Install **transformers** and **optimum** using `pip install transformers>=4.32.0 optimum>=1.12.0`
-   2. Install **ctransformers** using `pip install ctransformers[cuda]>=0.2.24`
-   3. Install **bitsandsbytes** using `pip install bitsandbytes`
-7. Ensure PyTorch with CUDA is installed
+6. For PyTorch with CUDA is support:
    1. Install **PyTorch** using `pip install torch==2.2.0 torchvision==0.17.0 torchaudio==2.2.0 --index-url https://download.pytorch.org/whl/cu121`
+7. To add Hugging Face Transformers LLM inference support (with quantization), install the following:
+   1. Install **transformers** and **optimum** using `pip install 'transformers>=4.32.0' 'optimum>=1.12.0'`
+   2. Install **ctransformers** using `pip install 'ctransformers[cuda]>=0.2.24'`
+   3. Install **bitsandsbytes** using `pip install bitsandbytes`
+   4. Install **accelerate** using `pip install 'accelerate>=0.26.0'`
 8. If using OpenAI API:
    1. For API access to OpenAI (for labelling or generation), install **openai** using `pip install openai`
    2. Set the following environment variables:
