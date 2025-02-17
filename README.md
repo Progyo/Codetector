@@ -1,5 +1,5 @@
-<h1 style="text-align: center;">Codetector</h1> 
-<div style="text-align: center;">
+<h1 align="center">Codetector</h1> 
+<div align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
   <a href="/"><img src="https://img.shields.io/badge/status-active-success.svg" alt="Status"></a>
 </div>
