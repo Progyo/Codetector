@@ -10,7 +10,7 @@ class XMLStackOverflowPreDataset(XMLDataset):
     Date: 07-Apr-2024 11:06
     """
 
-    def __init__(self, filters : list[Filter]= None):
+    def __init__(self, filters : list[Filter]= []):
         super().__init__('data/stackoverflow_pre', filters=filters, checkpointPath='data/stackoverflow_pre_xml.pkl')
 
     def preProcess(self) -> None:
@@ -33,7 +33,7 @@ class ParquetStackOverflowPreDataset(ParquetDataset):
     Date: 07-Apr-2024 11:06
     """
 
-    def __init__(self, filters : list[Filter]= None):
+    def __init__(self, filters : list[Filter]= []):
         super().__init__('data/stackoverflow_pre', filters=filters, checkpointPath='data/stackoverflow_pre_parq.pkl')
 
     def preProcess(self) -> None:

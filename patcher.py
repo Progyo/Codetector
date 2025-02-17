@@ -106,6 +106,14 @@ if __name__ == "__main__":
 
     print(f'Detected Python lib folder: {pythonLibPath}')
 
+    ans = input('Would you like to proceed (y/n)? ')
+    while not (ans.lower() in ['yes','no','y','n']):
+        ans = input('Would you like to proceed (y/n)? ')
+
+    if ans in ['no','n']:
+        print('Exiting')
+        exit()
+
     fileStr = getTypingFile(pythonLibPath)
 
     classStr = extractNewTypeClass(fileStr)

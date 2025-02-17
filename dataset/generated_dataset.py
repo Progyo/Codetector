@@ -8,7 +8,7 @@ class XMLGeneratedCodeDataset(XMLDataset):
     Generated dataset that stores all the code samples in XML format.
     """
 
-    def __init__(self, filters : list[Filter]= None):
+    def __init__(self, filters : list[Filter]= []):
         super().__init__('data/generated', filters=filters, checkpointPath='data/generated_xml.pkl')
 
     def preProcess(self) -> None:
@@ -27,7 +27,7 @@ class ParquetGeneratedCodeDataset(ParquetDataset):
     Generated dataset that stores all the code samples in Apache Parquet format.
     """
 
-    def __init__(self, filters : list[Filter]= None):
+    def __init__(self, filters : list[Filter]= []):
         super().__init__('data/generated', filters=filters, checkpointPath='data/generated_parq.pkl')
 
     def preProcess(self) -> None:

@@ -8,7 +8,7 @@ class XMLCodeDetectionDataset(XMLDataset):
     Detection dataset (Final dataset) that stores all the classified samples in XML format.
     """
 
-    def __init__(self, filters : list[Filter]= None):
+    def __init__(self, filters : list[Filter]= []):
         super().__init__('data/detection', filters=filters, checkpointPath='data/detection_xml.pkl')
 
     def preProcess(self) -> None:
@@ -27,7 +27,7 @@ class ParquetCodeDetectionDataset(ParquetDataset):
     Detection dataset (Final dataset) that stores all the classified samples in Apache Parquet format.
     """
 
-    def __init__(self, filters : list[Filter]= None):
+    def __init__(self, filters : list[Filter]= []):
         super().__init__('data/detection', filters=filters, checkpointPath='data/detection_parq.pkl')
 
     def preProcess(self) -> None:
