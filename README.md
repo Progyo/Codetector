@@ -96,7 +96,7 @@ Source datasets exclusively contain human-generated code samples. We used a mixt
 
 #### APPS and CodeSearchNet
 
-For APPS and CodeSearchNet, we utilise [Hugging Face Datasets](https://huggingface.co/docs/datasets/en/index). Ensure that you have installed the dependency with `pip install datasets`. Then simply import the dataset. You can find the hash lists [here]().
+For APPS and CodeSearchNet, we utilise [Hugging Face Datasets](https://huggingface.co/docs/datasets/en/index). Ensure that you have installed the dependency with `pip install datasets`. Then simply import the dataset. You can find the hash lists [here](https://zenodo.org/records/19712431?preview_file=hashlists.zip).
 
 Usage:
 ```py
@@ -123,7 +123,7 @@ for sample in batch.samples:
 
 #### LeetCode
 
-For LeetCode we utilise two sources. For the "Pre" dataset we utilise [Hugging Face Datasets](https://huggingface.co/docs/datasets/en/index), like APPS and CodeSearchNet. For the "Post" dataset we use our own web-scraped dataset and extend the `Dataset` abstract class defined in the framework to implement JSON reading capabilities for the specific dataset. You can find the hash lists [here]().
+For LeetCode we utilise two sources. For the "Pre" dataset we utilise [Hugging Face Datasets](https://huggingface.co/docs/datasets/en/index), like APPS and CodeSearchNet. For the "Post" dataset we use our own web-scraped dataset and extend the `Dataset` abstract class defined in the framework to implement JSON reading capabilities for the specific dataset. You can find the hash lists [here](https://zenodo.org/records/19712431?preview_file=hashlists.zip).
 
 For LeetCode Post, you must download the dataset from [here]() and place it under `data/leetcode_post/samples.json`.
 
@@ -142,7 +142,7 @@ leetcodePost = LeetCodePostDataset(filters=[DistributionFilter('data/leetcode-po
 
 #### Stack Overflow
 
-For Stack Overflow, like LeetCode, we split the dataset into "Pre" and "Post". We supply the split datasets individually as two compressed Apache Parquet partition datasets. You can download the Pre dataset [here]() and the Post dataset [here](). Place the `.parquet` files in `data/stackoverflow_pre` and `data/stackoverflow_post` respectively. You can find the hash lists [here]().
+For Stack Overflow, like LeetCode, we split the dataset into "Pre" and "Post". We supply the split datasets individually as two compressed Apache Parquet partition datasets. You can download the Pre dataset [here]() and the Post dataset [here](). Place the `.parquet` files in `data/stackoverflow_pre` and `data/stackoverflow_post` respectively. You can find the hash lists [here](https://zenodo.org/records/19712431?preview_file=hashlists.zip).
 
 Usage:
 ```py
@@ -159,7 +159,7 @@ stackoverflowPost = ParquetStackOverflowPostDataset(filters=[DistributionFilter(
 
 ### Generated and Detection
 
-The generation and detection pipelines require the generated and detection samples to be saved to another dataset. For ease of use, we implemented a generated and detection dataset class (Specifically for CodeSamples and CodeDetectionSamples).
+The generation and detection pipelines require the generated and detection samples to be saved to another dataset. For ease of use, we implemented a generated and detection dataset class (Specifically for CodeSamples and CodeDetectionSamples). You can download the generated and detection datasets used in the paper [here](https://zenodo.org/records/19712431). You can find the hash lists [here](https://zenodo.org/records/19712431?preview_file=hashlists.zip).
 
 Usage:
 ```py
