@@ -142,7 +142,7 @@ leetcodePost = LeetCodePostDataset(filters=[DistributionFilter('data/leetcode-po
 
 #### Stack Overflow
 
-For Stack Overflow, like LeetCode, we split the dataset into "Pre" and "Post". We supply the split datasets individually as two compressed Apache Parquet partition datasets. You can download the Pre dataset [here]() and the Post dataset [here](). Place the `.parquet` files in `data/stackoverflow_pre` and `data/stackoverflow_post` respectively. You can find the hash lists [here](https://zenodo.org/records/19712431?preview_file=hashlists.zip).
+For Stack Overflow, like LeetCode, we split the dataset into "Pre" and "Post". We supply the split datasets individually as two compressed Apache Parquet partition datasets. You can download the Pre dataset [here](https://zenodo.org/records/19712431?preview_file=stackoverflow_pre.zip) and the Post dataset [here](https://zenodo.org/records/19712431?preview_file=stackoverflow_post.zip). Place the `.parquet` files in `data/stackoverflow_pre` and `data/stackoverflow_post` respectively. You can find the hash lists [here](https://zenodo.org/records/19712431?preview_file=hashlists.zip).
 
 Usage:
 ```py
