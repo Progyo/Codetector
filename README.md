@@ -125,7 +125,7 @@ for sample in batch.samples:
 
 For LeetCode we utilise two sources. For the "Pre" dataset we utilise [Hugging Face Datasets](https://huggingface.co/docs/datasets/en/index), like APPS and CodeSearchNet. For the "Post" dataset we use our own web-scraped dataset and extend the `Dataset` abstract class defined in the framework to implement JSON reading capabilities for the specific dataset. You can find the hash lists [here](https://zenodo.org/records/19712431?preview_file=hashlists.zip).
 
-For LeetCode Post, you must download the dataset from [here]() and place it under `data/leetcode_post/samples.json`.
+For LeetCode Post, you must download the dataset from [here](https://zenodo.org/records/19712431?preview_file=leetcode_post.zip) and place it under `data/leetcode_post/samples.json`.
 
 Usage:
 ```py
